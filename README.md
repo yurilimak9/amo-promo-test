@@ -23,6 +23,9 @@ $ source venv/bin/activate
 # instale as dependências
 $ pip install -r requirements.txt
 
+# Crie um arquivo .env na raiz do projeto tomando como 
+# exemplo o arquivo .env-example e adicione suas credencias
+
 # Execute a aplicação
 $ python app.py
 
@@ -33,6 +36,9 @@ $ python app.py
 
 - [Python](https://python.org/)
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+- [Requests](https://docs.python-requests.org/en/latest/)
+- [Pydantic](https://pydantic-docs.helpmanual.io/)
+- [Python-dotenv](https://pypi.org/project/python-dotenv/)
 
 ### Autor
 
