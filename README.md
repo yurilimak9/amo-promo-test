@@ -33,6 +33,8 @@ $ python app.py
 
 - [Python](https://python.org/)
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+- [Requests](https://docs.python-requests.org/en/latest/)
+- [Pydantic](https://pydantic-docs.helpmanual.io/)
 
 ### Autor
 
