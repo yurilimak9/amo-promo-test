@@ -16,3 +16,17 @@ class SearchFlightOptions:
         response = requests.get(url, auth=HTTPBasicAuth(config.get('USERNAME'), config.get('PASSWORD')))
 
         return response
+
+
+class SearchAvailableAirports:
+
+    def __init__(self):
+        self.__base_url = 'http://stub.2xt.com.br/air/airports'
+
+    def execute(self) -> dict:
+        config = dotenv_values('.env')
+        api_key = config.get('API_KEY')
+        url = f'{self.__base_url}/{api_key}'
+        response = requests.get(url, auth=HTTPBasicAuth(config.get('USERNAME'), config.get('PASSWORD')))
+
+        return loads(response.content)
