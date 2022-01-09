@@ -27,6 +27,11 @@ class Price(BaseModel):
         self.fees = round(result, 2) if result > 40 else 40
         return self
 
+    def calculate_total(self):
+        result = self.fare + self.fees
+        self.total = round(result, 2)
+        return self
+
 
 class Aircraft(BaseModel):
     model: str

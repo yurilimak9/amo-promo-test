@@ -37,6 +37,7 @@ def index(iata_origin, iata_destiny, departure_date, return_date):
     mock_airlines_inc = MockAirlinesInc(**data.json())
     for flight in mock_airlines_inc.options:
         flight.price.calculate_fee()
+        flight.price.calculate_total()
 
     return Response(mock_airlines_inc.json(), status=200, mimetype='application/json')
 
