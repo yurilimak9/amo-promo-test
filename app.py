@@ -1,6 +1,5 @@
 from flask import Flask, Response
-from src.services import SearchAvailableAirports, SearchFlightOptions
-from src.entities import MockAirlinesInc
+from src.services import SearchAvailableAirports, SearchFlightOptions, FlightRecommendationsService
 from datetime import datetime
 from json import dumps
 
@@ -32,23 +31,14 @@ def index(iata_origin, iata_destiny, departure_date, return_date):
         return Response(message, status=400, mimetype='application/json')
 
     search_flight_options = SearchFlightOptions()
-    data = search_flight_options.execute(iata_origin, iata_destiny, str(departure_date.date()))
 
-    mock_airlines_inc = MockAirlinesInc(**data.json())
-    for flight in mock_airlines_inc.options:
-        flight.price.calculate_fee()
-        flight.price.calculate_total()
+    going_data = search_flight_options.execute(iata_origin, iata_destiny, str(departure_date.date())).json()
+    return_data = search_flight_options.execute(iata_destiny, iata_origin, str(return_date.date())).json()
 
-        flight.meta.calculate_range(
-            mock_airlines_inc.summary.from_.lat,
-            mock_airlines_inc.summary.from_.lon,
-            mock_airlines_inc.summary.to.lat,
-            mock_airlines_inc.summary.to.lon
-        )
-        flight.meta.calculate_cruise_speed_kmh(flight.departure_time, flight.arrival_time)
-        flight.meta.calculate_cost_per_km(flight.price.fare)
+    flight_recommendations = FlightRecommendationsService()
+    result = flight_recommendations.execute(going_data, return_data)
 
-    return Response(mock_airlines_inc.json(), status=200, mimetype='application/json')
+    return Response(dumps(result), status=200, mimetype='application/json')
 
 
 if __name__ == '__main__':

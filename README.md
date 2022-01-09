@@ -1,5 +1,20 @@
 # Teste para desenvolvedor Amo Promo
 
+### Getting Started
+
+```
+# Endpoint para buscar recomendações de voo
+
+http://127.0.0.1:5000/api/search/<iata_origin>/<iata_destiny>/<departure_date>/<return_date>
+```
+
+Exemplo   | Tipo   | Descrição
+--------- | ------ | --------
+iata_origin | string | IATA de Origem.
+iata_destiny | string | IATA de Destino.
+departure_date | string | Data de ida. Formato: **YYYY-MM-DD**
+return_date | string | Data de volta. Formato: **YYYY-MM-DD**
+
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
