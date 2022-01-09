@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List
+from .utils import haversine
 
 
 class Airport(BaseModel):
@@ -42,6 +43,11 @@ class Meta(BaseModel):
     range: float
     cruise_speed_kmh: float
     cost_per_km: float
+
+    def calculate_range(self, lat1: float, long1: float, lat2: float, long2: float):
+        result = haversine(lat1, long1, lat2, long2)
+        self.range = round(result, 2)
+        return self
 
 
 class Flight(BaseModel):
