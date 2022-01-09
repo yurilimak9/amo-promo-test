@@ -61,6 +61,11 @@ class Meta(BaseModel):
         self.cruise_speed_kmh = round(result, 2)
         return self
 
+    def calculate_cost_per_km(self, fare):
+        result = fare / self.range
+        self.cost_per_km = round(result, 2)
+        return self
+
 
 class Flight(BaseModel):
     departure_time: str

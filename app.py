@@ -46,6 +46,7 @@ def index(iata_origin, iata_destiny, departure_date, return_date):
             mock_airlines_inc.summary.to.lon
         )
         flight.meta.calculate_cruise_speed_kmh(flight.departure_time, flight.arrival_time)
+        flight.meta.calculate_cost_per_km(flight.price.fare)
 
     return Response(mock_airlines_inc.json(), status=200, mimetype='application/json')
 
