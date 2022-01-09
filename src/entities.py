@@ -22,6 +22,11 @@ class Price(BaseModel):
     fees: float
     total: float
 
+    def calculate_fee(self):
+        result = self.fare * 0.1
+        self.fees = round(result, 2) if result > 40 else 40
+        return self
+
 
 class Aircraft(BaseModel):
     model: str
@@ -46,4 +51,3 @@ class Flight(BaseModel):
 class MockAirlinesInc(BaseModel):
     summary: Summary
     options: List[Flight]
-

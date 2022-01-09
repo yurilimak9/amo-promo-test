@@ -1,5 +1,6 @@
 from flask import Flask, Response
-from src.services import SearchAvailableAirports
+from src.services import SearchAvailableAirports, SearchFlightOptions
+from src.entities import MockAirlinesInc
 from datetime import datetime
 from json import dumps
 
@@ -30,7 +31,14 @@ def index(iata_origin, iata_destiny, departure_date, return_date):
         message = dumps({'message': 'A data de retorno não pode ser menor ou igual à data de partida'})
         return Response(message, status=400, mimetype='application/json')
 
-    return {'message': 'OK'}
+    search_flight_options = SearchFlightOptions()
+    data = search_flight_options.execute(iata_origin, iata_destiny, str(departure_date.date()))
+
+    mock_airlines_inc = MockAirlinesInc(**data.json())
+    for flight in mock_airlines_inc.options:
+        flight.price.calculate_fee()
+
+    return Response(mock_airlines_inc.json(), status=200, mimetype='application/json')
 
 
 if __name__ == '__main__':
