@@ -38,6 +38,9 @@ def index(iata_origin, iata_destiny, departure_date, return_date):
     flight_recommendations = FlightRecommendationsService()
     result = flight_recommendations.execute(going_data, return_data)
 
+    # Sorted from cheapest to most expensive
+    result.get('options').sort(key=lambda item: item.get('price').get('total'))
+
     return Response(dumps(result), status=200, mimetype='application/json')
 
 
