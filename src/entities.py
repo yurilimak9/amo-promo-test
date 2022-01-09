@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List
 from .utils import haversine
+from datetime import datetime
 
 
 class Airport(BaseModel):
@@ -47,6 +48,17 @@ class Meta(BaseModel):
     def calculate_range(self, lat1: float, long1: float, lat2: float, long2: float):
         result = haversine(lat1, long1, lat2, long2)
         self.range = round(result, 2)
+        return self
+
+    def calculate_cruise_speed_kmh(self, departure_time: str, arrival_time: str):
+        departure_time = datetime.strptime(departure_time, '%Y-%m-%dT%H:%M:%S')
+        arrival_time = datetime.strptime(arrival_time, '%Y-%m-%dT%H:%M:%S')
+
+        time_in_seconds = (arrival_time - departure_time).seconds
+        time = time_in_seconds / 3600
+
+        result = self.range / time
+        self.cruise_speed_kmh = round(result, 2)
         return self
 
 

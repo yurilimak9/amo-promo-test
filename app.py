@@ -39,7 +39,13 @@ def index(iata_origin, iata_destiny, departure_date, return_date):
         flight.price.calculate_fee()
         flight.price.calculate_total()
 
-        flight.meta.calculate_range(mock_airlines_inc.summary.from_.lat, mock_airlines_inc.summary.from_.lon, mock_airlines_inc.summary.to.lat, mock_airlines_inc.summary.to.lon)
+        flight.meta.calculate_range(
+            mock_airlines_inc.summary.from_.lat,
+            mock_airlines_inc.summary.from_.lon,
+            mock_airlines_inc.summary.to.lat,
+            mock_airlines_inc.summary.to.lon
+        )
+        flight.meta.calculate_cruise_speed_kmh(flight.departure_time, flight.arrival_time)
 
     return Response(mock_airlines_inc.json(), status=200, mimetype='application/json')
 
